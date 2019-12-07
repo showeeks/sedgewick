@@ -153,10 +153,11 @@ void dfsR(Graph G, Edge e)
 {
     int w = e.w;
     pre[w] = cnt++;
+    printf("-> %d",w);
     // 遍历链表 adj[w]
     for (link t = G->adj[w]; t != NULL; t = t->next)
     {
-        if (pre[t->v] != -1 && t->v > w)
+        if (pre[t->v] == -1 && t->v > w)
         {
             dfsR(G, EDGE(t->v, t->v));
         }
@@ -171,13 +172,15 @@ void GRAPHsearch(Graph G)
     cnt = 0;
     for (int v = 0; v < G->V; v++)
     {
-        pre[v] == -1;
+        pre[v] = -1;
     }
     for (int v = 0; v < G->V; v++)
     {
-        if (pre[v] != -1)
+        if (pre[v] == -1)
         {
+            printf("%d", v);
             dfsR(G, EDGE(v, v));
+            printf("\n");
         }
     }
 }
