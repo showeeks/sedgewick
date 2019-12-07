@@ -155,7 +155,7 @@ void dfsR(Graph G, Edge e)
 {
     int w = e.w;
     pre[w] = cnt++;
-    printf("-> %d",w);
+    printf("-> %d", w);
     // 遍历链表 adj[w]
     for (link t = G->adj[w]; t != NULL; t = t->next)
     {
@@ -163,6 +163,32 @@ void dfsR(Graph G, Edge e)
         {
             dfsR(G, EDGE(t->v, t->v));
         }
+    }
+}
+
+void dfsReuler(Graph G, Edge e)
+{
+    pre[e.w] = cnt++;
+    printf("-%d",e.w);
+    for (link t = 0; t != NULL; t = t->next)
+    {
+        if (pre[t->v] == -1)
+        {
+            dfsReuler(G, EDGE(e.w, t->v));
+        }
+        // t-> v 是 w 的邻居
+        // e.v 是 w 的父亲
+        // 如果邻居 < 父亲说明成环
+        else if (pre[t->v] < pre[e.v])
+        {
+            printf("-%d-%d", t->v, e.w);
+        }
+    }
+    if (e.v != e.w)
+    {
+        printf("-%d", e.v);
+    } else {
+        printf("\n");
     }
 }
 
@@ -181,7 +207,7 @@ void GRAPHsearch(Graph G)
         if (pre[v] == -1)
         {
             printf("%d", v);
-            dfsR(G, EDGE(v, v));
+            search(G, EDGE(v, v));
             printf("\n");
         }
     }
