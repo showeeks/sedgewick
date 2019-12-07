@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "gcc-7 build active file",
+            "command": "/usr/bin/gcc-7",
+            "args": [
+                "-g",
+                "${workspaceRoot}/src/main.c",
+                "${workspaceRoot}/src/graph-matrix.c",
+                "-o",
+                "${workspaceRoot}/target/main.o"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        }
+    ]
+}
