@@ -1,3 +1,7 @@
+/**
+ * 图的 ADT 接口
+ */
+
 #ifndef __GRAPHH__
 
 #define maxV 100

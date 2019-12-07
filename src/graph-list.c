@@ -34,7 +34,10 @@ struct graph
     int E;
     // 链表指针数组
     link *adj;
+    // 计算连通图问题
     int *cc;
+    // 计算二分图问题
+    int *color;
 };
 
 /**
@@ -213,4 +216,42 @@ void GRAPHsearch(Graph G)
             search(G, EDGE(v, v));
             printf("\n");
         }
+}
+
+/**
+ * @return 染色成功返回true, 染色失败返回false
+ */
+int dfsRcolor(Graph G, int v, int c)
+{
+    for (link t = 0; t != NULL; t = t->next)
+        if (G->color[t->v] == -1)
+            // 如果子搜索失败，返回false
+            if (!dfsRcolor(G, t->v, 1 - c))
+                return 0;
+            // 如果邻居和当前节点颜色一样，返回false
+            else if (G->color[t->v] != c)
+                return 0;
+    return 1;
+}
+
+/**
+ * 
+ */
+int GRAPHtwocolor(Graph G)
+{
+    G->color = malloc(G->V * sizeof(int));
+    for (int v = 0; v < G->V; v++)
+        G->color[v] = -1;
+    for (int v = 0; v < G->V; v++)
+        if (G->color[v] == -1)
+            if (!dfsRcolor(G, v, 0))
+                return 0;
+}
+
+/**
+ * 判断 v 和 w 是否在同一个连通分支
+ */
+int GRAPHconnect(Graph G, int v, int w)
+{
+    return G->cc[v] == G->cc[w];
 }

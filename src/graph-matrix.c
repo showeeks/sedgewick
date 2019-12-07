@@ -154,17 +154,11 @@ void dfsR(Graph G, Edge e)
     pre[w] = cnt++;
     // 访问 w 的所有邻居
     for (int t = 0; t < G->V; t++)
-    {
         // w 与 t 之间存在边
         if (G->adj[w][t] != 0)
-        {
             // t 未被访问过
             if (pre[t] == -1)
-            {
                 dfsR(G, EDGE(w, t));
-            }
-        }
-    }
 }
 
 /**
@@ -176,15 +170,9 @@ void GRAPHsearch(Graph G)
     cnt = 0;
     // 将所有顶点初始化为未访问过
     for (int v = 0; v < G->V; v++)
-    {
         pre[v] = -1;
-    }
     // 尝试访问所有节点
     for (int v = 0; v < G->V; v++)
-    {
         if (pre[v] == -1)
-        {
             search(G, EDGE(v, v));
-        }
-    }
 }
