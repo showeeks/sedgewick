@@ -34,6 +34,7 @@ struct graph
     int E;
     // 链表指针数组
     link *adj;
+    int *cc;
 };
 
 /**
@@ -98,16 +99,10 @@ int GRAPHedges(Edge edges[], Graph G)
     int E = 0;
     // 顶点
     for (int v = 0; v < G->V; v++)
-    {
         // 顶点 v 的邻接链表
         for (link t = G->adj[v]; t != NULL; t = t->next)
-        {
             if (t->v > v)
-            {
                 edges[E++] = EDGE(v, t->v);
-            }
-        }
-    }
 }
 
 void GRAPHshow(Graph G)
@@ -117,9 +112,7 @@ void GRAPHshow(Graph G)
     {
         printf("%2d:", v);
         for (link t = G->adj[v]; t != NULL; t = t->next)
-        {
             printf(" %2d", t->v);
-        }
         printf("\n");
     }
 }
@@ -136,9 +129,7 @@ Graph GRAPHrand(int V, int E)
     Graph G = GRAPHinit(V);
     // 开始构造边
     while (G->E < E)
-    {
         GRAPHinsertE(G, EDGE(randV(G), randV(G)));
-    }
     return G;
 }
 
@@ -158,38 +149,52 @@ void dfsR(Graph G, Edge e)
     printf("-> %d", w);
     // 遍历链表 adj[w]
     for (link t = G->adj[w]; t != NULL; t = t->next)
-    {
         if (pre[t->v] == -1 && t->v > w)
-        {
             dfsR(G, EDGE(t->v, t->v));
-        }
-    }
 }
 
 void dfsReuler(Graph G, Edge e)
 {
     pre[e.w] = cnt++;
-    printf("-%d",e.w);
+    printf("-%d", e.w);
     for (link t = 0; t != NULL; t = t->next)
-    {
         if (pre[t->v] == -1)
-        {
             dfsReuler(G, EDGE(e.w, t->v));
-        }
         // t-> v 是 w 的邻居
         // e.v 是 w 的父亲
         // 如果邻居 < 父亲说明成环
         else if (pre[t->v] < pre[e.v])
-        {
             printf("-%d-%d", t->v, e.w);
-        }
-    }
     if (e.v != e.w)
-    {
         printf("-%d", e.v);
-    } else {
+    else
         printf("\n");
-    }
+}
+
+/**
+ * 使用 DFS 计算所有的连通分量
+ * 
+ * @param G 图
+ * @param v 访问的顶点
+ * @param id 连通分量的 id
+ */
+void dfsRcc(Graph G, int v, int id)
+{
+    G->cc[v] = id;
+    for (link t = 0; t != NULL; t = t->next)
+        if (G->cc[t->v] == -1)
+            dfsRcc(G, t->v, id);
+}
+
+int GRAPHcc(Graph G)
+{
+    int id = 0;
+    G->cc = malloc(G->V * sizeof(int));
+    for (int v = 0; v < G->V; v++)
+        G->cc[v] = -1;
+    for (int v = 0; v < G->V; v++)
+        if (pre[v] == -1)
+            dfsRcc(G, v, id++);
 }
 
 /**
@@ -199,16 +204,12 @@ void GRAPHsearch(Graph G)
 {
     cnt = 0;
     for (int v = 0; v < G->V; v++)
-    {
         pre[v] = -1;
-    }
     for (int v = 0; v < G->V; v++)
-    {
         if (pre[v] == -1)
         {
             printf("%d", v);
             search(G, EDGE(v, v));
             printf("\n");
         }
-    }
 }
