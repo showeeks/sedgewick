@@ -67,10 +67,8 @@ Graph GRAPHinit(int V)
     // 空的链表指针数组，长度为 V
     G->adj = malloc(V * sizeof(link));
     for (int v = 0; v < V; v++)
-    {
         // 链表指针指向空
         G->adj[v] = NULL;
-    }
     return G;
 }
 
@@ -139,6 +137,7 @@ Graph GRAPHrand(int V, int E)
 // 已访问的顶点数量
 static int cnt;
 // pre 数组表示该图是否已被访问
+// 解决记录顶点的访问顺序的问题
 static int pre[maxV];
 #define dfsR search
 
@@ -254,4 +253,35 @@ int GRAPHtwocolor(Graph G)
 int GRAPHconnect(Graph G, int v, int w)
 {
     return G->cc[v] == G->cc[w];
+}
+
+static int low[maxV];
+static int bcnt;
+
+/**
+ * 计算 e 是否是一条边
+ * 
+ * 计算是否存在 e->w 的后辈指向 e->w 的祖先。
+ */
+void bridgeR(Graph G, Edge e)
+{
+    int w = e.w;
+    pre[w] = cnt++;
+    low[w] = pre[w];
+    for (link t = G->adj[e.w]; t != NULL; t = t->next)
+    {
+        int v = t->v;
+        if (pre[v] == -1)
+        {
+            bridgeR(G, EDGE(w, v));
+            if (low[w] > low[v])
+                low[w] = low[v];
+            if (low[v] == pre[v])
+                bcnt++;
+            printf("%d-%d\n", w, v);
+        }
+        else if (v != e.v)
+            if (low[w] > pre[v])
+                low[w] = pre[v];
+    }
 }
