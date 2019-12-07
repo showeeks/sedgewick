@@ -9,7 +9,7 @@
                 "-g",
                 "${workspaceRoot}/src/main.c",
                 "${workspaceRoot}/src/graph-list.c",
-                "-I",
+                "-",
                 "${workspaceRoot}/include",
                 "-o",
                 "${workspaceRoot}/target/main.o"

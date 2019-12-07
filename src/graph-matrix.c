@@ -9,7 +9,8 @@ struct graph
     int **adj;
 };
 
-Edge EDGE(int v, int w) {
+Edge EDGE(int v, int w)
+{
     Edge *e = malloc(sizeof(Edge));
     e->v = v;
     e->w = w;
@@ -116,4 +117,40 @@ Graph GRAPHrand(int V, int E)
         GRAPHinsertE(G, EDGE(randV(G), randV(G)));
     }
     return G;
+}
+
+static int cnt, pre[maxV];
+// dfsR 是 search 在该文件中的名称
+#define dfsR search
+
+void dfsR(Graph G, Edge e)
+{
+    int w = e.w;
+    pre[w] = cnt++;
+    for (int t = 0; t < G->V; t++)
+    {
+        if (G->adj[w][t] != 0)
+        {
+            if (pre[t] == -1)
+            {
+                dfsR(G, EDGE(w, t));
+            }
+        }
+    }
+}
+
+void GRAPHsearch(Graph G)
+{
+    cnt = 0;
+    for (int v = 0; v < G->V; v++)
+    {
+        pre[v] = -1;
+    }
+    for (int v = 0; v < G->V; v++)
+    {
+        if (pre[v] == -1)
+        {
+            search(G, EDGE(v, v));
+        }
+    }
 }
