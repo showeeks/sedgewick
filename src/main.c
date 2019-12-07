@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
         GRAPHshow(G);
     else
         printf("%d vertices, %d edges,", V, E);
+    GRAPHsearch(G);
     // printf("%d component (s)\n", GRAPHcc(G));
     return 0;
 }

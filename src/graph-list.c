@@ -156,7 +156,7 @@ void dfsR(Graph G, Edge e)
     // 遍历链表 adj[w]
     for (link t = G->adj[w]; t != NULL; t = t->next)
     {
-        if (pre[t->v] != -1)
+        if (pre[t->v] != -1 && t->v > w)
         {
             dfsR(G, EDGE(t->v, t->v));
         }
