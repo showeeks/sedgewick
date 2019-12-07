@@ -149,7 +149,7 @@ void dfsR(Graph G, Edge e)
     printf("-> %d", w);
     // 遍历链表 adj[w]
     for (link t = G->adj[w]; t != NULL; t = t->next)
-        if (pre[t->v] == -1 && t->v > w)
+        if (pre[t->v] == -1)
             dfsR(G, EDGE(t->v, t->v));
 }
 
@@ -181,7 +181,7 @@ void dfsReuler(Graph G, Edge e)
 void dfsRcc(Graph G, int v, int id)
 {
     G->cc[v] = id;
-    for (link t = 0; t != NULL; t = t->next)
+    for (link t = G->adj[v]; t != NULL; t = t->next)
         if (G->cc[t->v] == -1)
             dfsRcc(G, t->v, id);
 }
@@ -189,12 +189,13 @@ void dfsRcc(Graph G, int v, int id)
 int GRAPHcc(Graph G)
 {
     int id = 0;
-    G->cc = malloc(G->V * sizeof(int));
+    G->cc = malloc((G->V) * sizeof(int));
     for (int v = 0; v < G->V; v++)
         G->cc[v] = -1;
     for (int v = 0; v < G->V; v++)
-        if (pre[v] == -1)
+        if (G->cc[v] == -1)
             dfsRcc(G, v, id++);
+    return id;
 }
 
 /**

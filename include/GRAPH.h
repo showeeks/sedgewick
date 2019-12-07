@@ -41,4 +41,5 @@ void GRAPHdestroy(Graph);
 Graph GRAPHrand(int V, int E);
 void GRAPHshow(Graph G);
 void GRAPHsearch(Graph G);
+int GRAPHcc(Graph G);
 #endif

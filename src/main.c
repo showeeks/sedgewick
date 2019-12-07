@@ -12,5 +12,7 @@ int main(int argc, char *argv[])
         printf("%d vertices, %d edges,", V, E);
     GRAPHsearch(G);
     // printf("%d component (s)\n", GRAPHcc(G));
+    int cc = GRAPHcc(G);
+    printf("there is %d connected components.", cc);
     return 0;
 }
