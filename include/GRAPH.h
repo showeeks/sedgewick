@@ -1,5 +1,7 @@
 #ifndef __GRAPHH__
 
+#define maxV 100
+
 // 边类型
 typedef struct
 {
@@ -38,4 +40,5 @@ void GRAPHdestroy(Graph);
  */
 Graph GRAPHrand(int V, int E);
 void GRAPHshow(Graph G);
+void GRAPHsearch(Graph G);
 #endif

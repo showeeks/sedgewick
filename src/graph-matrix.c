@@ -132,8 +132,6 @@ Graph GRAPHrand(int V, int E)
     return G;
 }
 
-// 最大顶点数
-#define maxV 200
 // 已访问的顶点数量
 static int cnt;
 // pre 数组表示该图是否已被访问
@@ -143,6 +141,7 @@ static int pre[maxV];
 
 /**
  * 深度优先搜索
+ * 深度优先搜索的特点是它是基于栈的，递归是最自然的形式
  * 
  * @param G 图
  * @param e 边

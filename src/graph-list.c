@@ -14,7 +14,8 @@ struct node
     link next;
 };
 
-Edge EDGE(int v, int w) {
+Edge EDGE(int v, int w)
+{
     Edge *e = malloc(sizeof(Edge));
     e->v = v;
     e->w = w;
@@ -137,4 +138,46 @@ Graph GRAPHrand(int V, int E)
         GRAPHinsertE(G, EDGE(randV(G), randV(G)));
     }
     return G;
+}
+
+// 已访问的顶点数量
+static int cnt;
+// pre 数组表示该图是否已被访问
+static int pre[maxV];
+#define dfsR search
+
+/**
+ * 遍历一个连通分支
+ */
+void dfsR(Graph G, Edge e)
+{
+    int w = e.w;
+    pre[w] = cnt++;
+    // 遍历链表 adj[w]
+    for (link t = G->adj[w]; t != NULL; t = t->next)
+    {
+        if (pre[t->v] != -1)
+        {
+            dfsR(G, EDGE(t->v, t->v));
+        }
+    }
+}
+
+/**
+ * 遍历整个图
+ */
+void GRAPHsearch(Graph G)
+{
+    cnt = 0;
+    for (int v = 0; v < G->V; v++)
+    {
+        pre[v] == -1;
+    }
+    for (int v = 0; v < G->V; v++)
+    {
+        if (pre[v] != -1)
+        {
+            dfsR(G, EDGE(v, v));
+        }
+    }
 }
