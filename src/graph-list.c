@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "GRAPH.h"
 
 // 链表指针类型
@@ -12,6 +13,13 @@ struct node
     // 下一个节点
     link next;
 };
+
+Edge EDGE(int v, int w) {
+    Edge *e = malloc(sizeof(Edge));
+    e->v = v;
+    e->w = w;
+    return *e;
+}
 
 /**
  * 邻接链表表示的图类型
@@ -84,15 +92,49 @@ void GRAPHinsertE(Graph G, Edge e)
  */
 int GRAPHedges(Edge edges[], Graph G)
 {
+    // 边的数量
     int E = 0;
+    // 顶点
     for (int v = 0; v < G->V; v++)
     {
+        // 顶点 v 的邻接链表
         for (link t = G->adj[v]; t != NULL; t = t->next)
         {
-            if (v < t->v)
+            if (t->v > v)
             {
                 edges[E++] = EDGE(v, t->v);
             }
         }
     }
+}
+
+void GRAPHshow(Graph G)
+{
+    printf("%d vertices, %d edges\n", G->V, G->E);
+    for (int v = 0; v < G->V; v++)
+    {
+        printf("%2d:", v);
+        for (link t = G->adj[v]; t != NULL; t = t->next)
+        {
+            printf(" %2d", t->v);
+        }
+        printf("\n");
+    }
+}
+
+int randV(Graph G)
+{
+    return G->V * (rand() / (RAND_MAX + 1.0));
+}
+
+Graph GRAPHrand(int V, int E)
+{
+    // 先创建一个空的图
+    Graph G = GRAPHinit(V);
+    // 开始构造边
+    while (G->E < E)
+    {
+        GRAPHinsertE(G, EDGE(randV(G), randV(G)));
+    }
+    return G;
 }

@@ -3,7 +3,9 @@
 // 边类型
 typedef struct
 {
+    // 边的尾
     int v;
+    // 边的头
     int w;
 } Edge;
 
