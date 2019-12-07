@@ -1,11 +1,24 @@
+/**
+ * 图的矩阵表示的实现和相关算法
+ * 如果实现与矩阵表示是相关的，就必须写在该文件中
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "GRAPH.h"
 
+/**
+ * 图的完整类型
+ * 图的具体属性不允许外部访问
+ */
 struct graph
 {
+    // 图的顶点数量
     int V;
+    // 图的边数量
     int E;
+    // 邻接矩阵，adj[v] 表示
     int **adj;
 };
 
@@ -119,18 +132,34 @@ Graph GRAPHrand(int V, int E)
     return G;
 }
 
-static int cnt, pre[maxV];
-// dfsR 是 search 在该文件中的名称
+// 最大顶点数
+#define maxV 200
+// 已访问的顶点数量
+static int cnt;
+// pre 数组表示该图是否已被访问
+static int pre[maxV];
+// 在该文件中 search 的实现是 DFS
 #define dfsR search
 
+/**
+ * 深度优先搜索
+ * 
+ * @param G 图
+ * @param e 边
+ */
 void dfsR(Graph G, Edge e)
 {
+    // 访问 e 的头 w
     int w = e.w;
+    // 将顶点 w 标记为已访问过
     pre[w] = cnt++;
+    // 访问 w 的所有邻居
     for (int t = 0; t < G->V; t++)
     {
+        // w 与 t 之间存在边
         if (G->adj[w][t] != 0)
         {
+            // t 未被访问过
             if (pre[t] == -1)
             {
                 dfsR(G, EDGE(w, t));
@@ -139,13 +168,19 @@ void dfsR(Graph G, Edge e)
     }
 }
 
+/**
+ * 搜索一个邻接矩阵表示的图
+ */
 void GRAPHsearch(Graph G)
 {
+    // 首先初始化静态变量 cnt
     cnt = 0;
+    // 将所有顶点初始化为未访问过
     for (int v = 0; v < G->V; v++)
     {
         pre[v] = -1;
     }
+    // 尝试访问所有节点
     for (int v = 0; v < G->V; v++)
     {
         if (pre[v] == -1)
