@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "GRAPH.h"
 
 // 链表指针类型
@@ -130,6 +131,7 @@ int randV(Graph G)
 
 Graph GRAPHrand(int V, int E)
 {
+    srand(time(NULL));
     // 先创建一个空的图
     Graph G = GRAPHinit(V);
     // 开始构造边
