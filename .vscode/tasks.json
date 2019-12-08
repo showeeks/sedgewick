@@ -3,19 +3,28 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "gcc-7 build active file",
-            "command": "/usr/bin/gcc-7",
+            "label": "build list",
+            "command": "/usr/bin/make",
             "args": [
-                "-g",
-                "${workspaceRoot}/src/main.c",
-                "${workspaceRoot}/src/graph-list.c",
-                "-I",
-                "${workspaceRoot}/include",
-                "-o",
-                "${workspaceRoot}/target/main.o"
+                "target/list",
             ],
             "options": {
-                "cwd": "/usr/bin"
+                "cwd": "${workspaceRoot}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "build matrix",
+            "command": "/usr/bin/make",
+            "args": [
+                "target/matrix"
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
             },
             "problemMatcher": [
                 "$gcc"

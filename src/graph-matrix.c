@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "GRAPH.h"
 
 /**
@@ -20,6 +21,8 @@ struct graph
     int E;
     // 邻接矩阵，adj[v] 表示
     int **adj;
+    // 解决连通分量计算问题
+    int *cc;
 };
 
 Edge EDGE(int v, int w)
@@ -122,13 +125,12 @@ int randV(Graph G)
 
 Graph GRAPHrand(int V, int E)
 {
+    srand(time(NULL));
     // 先创建一个空的图
     Graph G = GRAPHinit(V);
     // 开始构造边
     while (G->E < E)
-    {
         GRAPHinsertE(G, EDGE(randV(G), randV(G)));
-    }
     return G;
 }
 
@@ -137,7 +139,7 @@ static int cnt;
 // pre 数组表示该图是否已被访问
 static int pre[maxV];
 // 在该文件中 search 的实现是 DFS
-#define dfsR search
+#define dfsR search 
 
 /**
  * 深度优先搜索
@@ -152,6 +154,7 @@ void dfsR(Graph G, Edge e)
     int w = e.w;
     // 将顶点 w 标记为已访问过
     pre[w] = cnt++;
+    printf("<-%d", w);
     // 访问 w 的所有邻居
     for (int t = 0; t < G->V; t++)
         // w 与 t 之间存在边
@@ -174,5 +177,29 @@ void GRAPHsearch(Graph G)
     // 尝试访问所有节点
     for (int v = 0; v < G->V; v++)
         if (pre[v] == -1)
+        {
+            printf("%d: ", v);
             search(G, EDGE(v, v));
+            printf("\n");
+        }
+}
+
+void dfsRcc(Graph G, Edge e, int cc)
+{
+    G->cc[e.w] = cnt;
+    for (int v = 0; v < G->V; v++)
+        if (G->adj[e.w][v] != 0 && G->cc[v] == -1)
+            dfsRcc(G, EDGE(v, v), cc);
+}
+
+int GRAPHcc(Graph G)
+{
+    int cc = 0;
+    G->cc = malloc(G->V * sizeof(int));
+    for (int v = 0; v < G->V; v++)
+        G->cc[v] = -1;
+    for (int v = 0; v < G->V; v++)
+        if (G->cc[v] == -1)
+            dfsRcc(G, EDGE(v, v), cc++);
+    return cc;
 }
