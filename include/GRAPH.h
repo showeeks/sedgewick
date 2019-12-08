@@ -46,4 +46,7 @@ Graph GRAPHrand(int V, int E);
 void GRAPHshow(Graph G);
 void GRAPHsearch(Graph G);
 int GRAPHcc(Graph G);
+int GRAPHtwocolor(Graph G);
+int GRAPHcountbridge(Graph G);
+void GRAPHgraphviz(Graph G);
 #endif

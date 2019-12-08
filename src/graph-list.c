@@ -136,8 +136,7 @@ Graph GRAPHrand(int V, int E)
 
 // 已访问的顶点数量
 static int cnt;
-// pre 数组表示该图是否已被访问
-// 解决记录顶点的访问顺序的问题
+// 前序序号
 static int pre[maxV];
 #define dfsR search
 
@@ -224,10 +223,11 @@ int dfsRcolor(Graph G, int v, int c)
 {
     for (link t = 0; t != NULL; t = t->next)
         if (G->color[t->v] == -1)
-            // 如果子搜索失败，返回false
+            // 染色邻居
+            // 如果染色失败，返回 false
             if (!dfsRcolor(G, t->v, 1 - c))
                 return 0;
-            // 如果邻居和当前节点颜色一样，返回false
+            // 如果邻居和当前节点颜色一样，说明染色失败，返回false
             else if (G->color[t->v] != c)
                 return 0;
     return 1;
@@ -245,6 +245,7 @@ int GRAPHtwocolor(Graph G)
         if (G->color[v] == -1)
             if (!dfsRcolor(G, v, 0))
                 return 0;
+    return 1;
 }
 
 /**
@@ -255,33 +256,70 @@ int GRAPHconnect(Graph G, int v, int w)
     return G->cc[v] == G->cc[w];
 }
 
+// 最小的前序序号
 static int low[maxV];
+// 桥的数量
 static int bcnt;
 
 /**
- * 计算 e 是否是一条边
+ * 计算 e 是否是桥
  * 
  * 计算是否存在 e->w 的后辈指向 e->w 的祖先。
+ * 
+ * @param G 图
+ * @param e 边
  */
 void bridgeR(Graph G, Edge e)
 {
     int w = e.w;
     pre[w] = cnt++;
     low[w] = pre[w];
+    // 遍历 w 的子孙，计算 low[w]
+    // 这里主要是要比较 low[w] 和 pre[v]
     for (link t = G->adj[e.w]; t != NULL; t = t->next)
     {
+        // w 的邻居
         int v = t->v;
+        // 计算 low[v]
         if (pre[v] == -1)
         {
             bridgeR(G, EDGE(w, v));
+            // 这是第二次改进
             if (low[w] > low[v])
                 low[w] = low[v];
-            if (low[v] == pre[v])
+            if (e.w != e.v && low[w] == pre[w])
+            {
                 bcnt++;
-            printf("%d-%d\n", w, v);
+                printf("%d-%d\n", e.v, e.w);
+            }
         }
+        // 对 w 的所有儿子尝试是否可以优化 pre[w]
+        // 这是 pre[v] 的核心改进方式
+        // 这是第一次改进
         else if (v != e.v)
             if (low[w] > pre[v])
                 low[w] = pre[v];
     }
+}
+
+int GRAPHcountbridge(Graph G)
+{
+    for (int v = 0; v < G->V; v++)
+    {
+        low[v] = -1;
+        pre[v] = -1;
+    }
+    for (int v = 0; v < G->V; v++)
+        bridgeR(G, EDGE(v, v));
+    return bcnt;
+}
+
+void GRAPHgraphviz(Graph G)
+{
+    printf("graph {\n");
+    for (int v = 0; v < G->V; v++)
+        for (link t = G->adj[v]; t != NULL; t = t->next)
+            if (t->v > v)
+                printf("\t%d -- %d;\n", v, t->v);
+    printf("}\n");
 }

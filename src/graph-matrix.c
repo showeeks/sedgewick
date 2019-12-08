@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "GRAPH.h"
+#include <GRAPH.h>
 
 /**
  * 图的完整类型

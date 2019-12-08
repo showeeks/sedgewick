@@ -13,6 +13,9 @@ int main(int argc, char *argv[])
     GRAPHsearch(G);
     // printf("%d component (s)\n", GRAPHcc(G));
     int cc = GRAPHcc(G);
-    printf("there is %d connected components.", cc);
+    printf("there is %d connected components.\n", cc);
+    printf("this graph can be two colored: %s.\n", GRAPHtwocolor(G) ? "true" : "false");
+    printf("there is %d bridge(s) in this graph.\n", GRAPHcountbridge(G));
+    GRAPHgraphviz(G);
     return 0;
 }
