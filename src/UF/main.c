@@ -46,6 +46,6 @@ int main(int argc, char **argv)
 // #endif
 {
     assertTrue(testUF1);
-    assertFalse(testUF2);
+    assertTrue(testUF2);
     return 0;
 }
