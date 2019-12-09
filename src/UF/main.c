@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <UF.h>
 #include <TEST.h>
-#include<string.h>
+#include <string.h>
 
 #define TRUE 1
 #define FALSE 0
 
 static int cnt = 0;
 
-int testUF1(char* name)
+int testUF1(char *name)
 {
-    strcpy(name,__func__);
+    strcpy(name, __func__);
     UF uf = UFinit(10);
     UFunion(uf, 1, 2);
     UFunion(uf, 3, 4);
@@ -20,8 +20,9 @@ int testUF1(char* name)
     return res;
 }
 
-int testUF2()
+int testUF2(char *name)
 {
+    strcpy(name, __func__);
     UF uf = UFinit(10);
     UFunion(uf, 1, 2);
     UFunion(uf, 1, 3);
@@ -45,6 +46,6 @@ int main(int argc, char **argv)
 // #endif
 {
     assertTrue(testUF1);
-    assertTrue(testUF2);
+    assertFalse(testUF2);
     return 0;
 }

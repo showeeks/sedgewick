@@ -223,15 +223,18 @@ void GRAPHsearch(Graph G)
  */
 int dfsRcolor(Graph G, int v, int c)
 {
-    for (link t = 0; t != NULL; t = t->next)
+    G->color[v] = 1 - c;
+    for (link t = G->adj[v]; t != NULL; t = t->next)
         if (G->color[t->v] == -1)
+        {
             // 染色邻居
             // 如果染色失败，返回 false
             if (!dfsRcolor(G, t->v, 1 - c))
                 return 0;
             // 如果邻居和当前节点颜色一样，说明染色失败，返回false
-            else if (G->color[t->v] != c)
-                return 0;
+        }
+        else if (G->color[t->v] != c)
+            return 0;
     return 1;
 }
 
@@ -328,8 +331,10 @@ void GRAPHgraphviz(Graph G)
 
 void GRAPHdestroy(Graph G)
 {
+    // 释放所有链表
     for (int v = 0; v < G->V; v++)
     {
+        // 释放一个链表
         link t = G->adj[v];
         link next = NULL;
         while (t != NULL)
