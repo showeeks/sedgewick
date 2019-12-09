@@ -2,7 +2,8 @@
     "files.associations": {
         "graph.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "uf.h": "c"
     },
     "C_Cpp.default.cppStandard": "c++11"
 }

@@ -51,6 +51,29 @@
             ],
             "preLaunchTask": "build list",
             "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "debug UF",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/target/uf",
+            "args": [
+                "10",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build union find",
+            "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
 }

@@ -16,6 +16,14 @@ target/list: src/main.c target/graph-list.o
 target/matrix: src/main.c target/graph-matrix.o
 	gcc $(CFLAGS) $(include_dirs) src/main.c target/graph-matrix.o -o $@
 
+# 构建 UF 库
+target/uf.o: src/UF/uf.c
+	gcc $(CFLAGS) -c $(include_dirs) src/UF/uf.c -o $@
+
+# 构建
+target/uf: src/UF/main.c target/uf.o
+	gcc $(CFLAGS) $(include_dirs) src/UF/main.c target/uf.o -o $@
+	
 clean:
 	rm -rf target/*
 

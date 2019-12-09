@@ -323,3 +323,28 @@ void GRAPHgraphviz(Graph G)
                 printf("\t%d -- %d;\n", v, t->v);
     printf("}\n");
 }
+
+// void pfs(Graph G, Edge e)
+// {
+//     GQput(e);
+//     pre[e.w] = cnt++;
+//     while (!GQempty())
+//     {
+//         e = GQget();
+//         w = e.w;
+//         st[w] = e.v;
+//         for (link t = 0; t != NULL; t = t->next)
+//         {
+//             int v = t->v;
+//             if (pre[v] == -1)
+//             {
+//                 GQput(EDGE(w, v));
+//                 pre[v] = cnt++;
+//             }
+//             else if (st[v] == -1)
+//             {
+//                 GQupdate(EDGE(w, v));
+//             }
+//         }
+//     }
+// }
