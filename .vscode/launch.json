@@ -9,10 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/target/matrix",
-            "args": [
-                "6",
-                "7"
-            ],
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -33,10 +30,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/target/list",
-            "args": [
-                "6",
-                "7"
-            ],
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -57,9 +51,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/target/uf",
-            "args": [
-                "10",
-            ],
+            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -73,6 +65,27 @@
                 }
             ],
             "preLaunchTask": "build union find",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "debug stack",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/target/stack",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build stack",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
