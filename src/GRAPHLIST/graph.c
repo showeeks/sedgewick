@@ -69,6 +69,8 @@ Graph GRAPHinit(int V)
     for (int v = 0; v < V; v++)
         // 链表指针指向空
         G->adj[v] = NULL;
+    G->cc = NULL;
+    G->color = NULL;
     return G;
 }
 
@@ -322,6 +324,25 @@ void GRAPHgraphviz(Graph G)
             if (t->v > v)
                 printf("\t%d -- %d;\n", v, t->v);
     printf("}\n");
+}
+
+void GRAPHdestroy(Graph G)
+{
+    for (int v = 0; v < G->V; v++)
+    {
+        link t = G->adj[v];
+        link next = NULL;
+        while (t != NULL)
+        {
+            next = t->next;
+            free(t);
+            t = next;
+        }
+    }
+    free(G->cc);
+    free(G->color);
+    free(G->adj);
+    free(G);
 }
 
 // void pfs(Graph G, Edge e)
