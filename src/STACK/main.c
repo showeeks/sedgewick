@@ -33,6 +33,7 @@ int teststack(char *name)
     free(a);
     free(b);
     free(c);
+    STACKdestroy(s);
     return res;
 }
 
