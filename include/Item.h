@@ -1,3 +1,4 @@
 #ifndef __ITEM__
-typedef int *Item;
+typedef int Item;
+#define eq(A, B) ((A)==(B))
 #endif

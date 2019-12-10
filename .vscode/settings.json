@@ -5,7 +5,8 @@
         "stdlib.h": "c",
         "uf.h": "c",
         "test.h": "c",
-        "item.h": "c"
+        "item.h": "c",
+        "string.h": "c"
     },
     "C_Cpp.default.cppStandard": "c++11"
 }
