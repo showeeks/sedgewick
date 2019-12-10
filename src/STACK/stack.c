@@ -2,26 +2,43 @@
 #include <Item.h>
 #include <stdlib.h>
 
-static Item *s;
-static int N;
+struct stack{
+    // Item 数组
+    Item *s;
+    // 栈顶位置
+    int N;
+};
 
-void STACKinit(int maxN)
+/**
+ * 新建一个 stack
+ */
+Stack STACKinit(int maxN)
 {
-    s = malloc(maxN * sizeof(Item));
-    N = 0;
+    Stack s = malloc(sizeof(*s));
+    s->s = malloc(maxN * sizeof(Item));
+    s->N = 0;
+    return s;
 }
 
-int STACKempty()
+/**
+ * 清空 stack
+ */
+int STACKempty(Stack s)
 {
-    return N == 0;
+    return s->N == 0;
 }
 
-void STACKpush(Item item)
+void STACKpush(Stack s,Item item)
 {
-    s[N++] = item;
+    s->s[s->N++] = item;
 }
 
-Item STACKpop()
+Item STACKpop(Stack s)
 {
-    return s[--N];
+    return s->s[--s->N];
+}
+
+void STACKdestroy(Stack s) {
+    free(s->s);
+    free(s);
 }
